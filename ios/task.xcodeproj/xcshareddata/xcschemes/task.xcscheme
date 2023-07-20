@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Taski.app"
-               BlueprintName = "Taski"
-               ReferencedContainer = "container:Taski.xcodeproj">
+               BuildableName = "task.app"
+               BlueprintName = "task"
+               ReferencedContainer = "container:task.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "TaskiTests.xctest"
-               BlueprintName = "TaskiTests"
-               ReferencedContainer = "container:Taski.xcodeproj">
+               BuildableName = "taskTests.xctest"
+               BlueprintName = "taskTests"
+               ReferencedContainer = "container:task.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Taski.app"
-            BlueprintName = "Taski"
-            ReferencedContainer = "container:Taski.xcodeproj">
+            BuildableName = "task.app"
+            BlueprintName = "task"
+            ReferencedContainer = "container:task.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Taski.app"
-            BlueprintName = "Taski"
-            ReferencedContainer = "container:Taski.xcodeproj">
+            BuildableName = "task.app"
+            BlueprintName = "task"
+            ReferencedContainer = "container:task.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,4 +1,4 @@
-package com.taski;
+package com.task;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
