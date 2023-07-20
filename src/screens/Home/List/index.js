@@ -1,40 +1,36 @@
 import React from 'react';
-import {FlatList} from 'react-native';
-import {View} from 'native-base';
+import {FlatList, Text} from 'react-native';
+
+import styles from '../styles';
+
 import Item from './Item';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.reached = true;
+
     this.renderItem = this.renderItem.bind(this);
   }
 
   renderItem({item}) {
     return (
       <Item
+        language={this.props.language}
         item={item}
-        remove={id => this.props.remove(id)}
-        edit={id => this.props.edit(id)}
+        category={this.props.category}
+        call={() => this.props.call()}
       />
     );
   }
 
   render() {
     return (
-      <>
-        <View>
-          <FlatList
-            data={this.props.data}
-            showsHorizontalScrollIndicator={false}
-            renderItem={this.renderItem}
-            onEndReached={this.props.loadData}
-            onEndReachedThreshold={0.5}
-            onMomentumScrollBegin={() => (this.reached = false)}
-            ListFooterComponent={this.props.footer}
-          />
-        </View>
-      </>
+      <FlatList
+        contentContainerStyle={styles.itemContent}
+        data={this.props.fetching ? [1, 2, 3, 4] : this.props.list}
+        renderItem={this.renderItem}
+        showsHorizontalScrollIndicator={false}
+      />
     );
   }
 }

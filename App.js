@@ -12,12 +12,18 @@ import {
 import DrawerContent from '@component/Menu/Left';
 import {navigationRef} from '@utility/navigation';
 import AsyncStorage from '@react-native-community/async-storage';
-import Home from '@screen/Home';
-import SignIn from '@screen/SignIn';
 import NetInfo from '@react-native-community/netinfo';
 import LottieView from 'lottie-react-native';
 import {COLOR, FAMILY, SIZE} from '@theme/typography';
 import {NO_NET, NET_LOST_TITLE, NET_LOST_CONTENT, RETRY} from '@constant';
+
+//screens
+
+import Home from '@screen/Home';
+import SignIn from '@screen/SignIn';
+import ForgotPassword from '@screen/ForgotPassword';
+import About from '@screen/About';
+import ListView from '@screen/ListView'
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -113,6 +119,9 @@ export default class App extends Component {
           <Stack.Screen name="Drawer" component={DrawerRoot} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="SignIn" component={SignIn} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="About" component={About} />
+          <Stack.Screen name="ListView" component={ListView} />
         </Stack.Navigator>
       </NavigationContainer>
     );

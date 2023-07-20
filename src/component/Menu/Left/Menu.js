@@ -7,9 +7,17 @@ export const Menu = [
     iconType: 'FontAwesome'
   },
   {
+    name: 'About',
+    route: 'About',
+    iconName: 'exclamation-circle',
+    iconType: 'FontAwesome'
+  },
+  {
     name: 'Logout',
     route: 'SignIn',
     iconName: 'logout',
     iconType: 'AntDesign'
-  }
+  },
+ 
+
 ]

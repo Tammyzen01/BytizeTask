@@ -24,10 +24,10 @@ export { HOME_HEADING, BACK, NAME, NO_DATA_FOUND, ADD, UPDATE, ERR_MSG_NAME, EDI
 
 //SignIn
 
-const SIGN_IN = 'Sign In'
+const SIGN_IN = 'Submit'
 const LOGIN_TO = 'Login to'
-const VALID_EMAIL = 'task@bytize.com'
-const VALID_PASSWORD = 'admin@123'
+const VALID_EMAIL = 'task@gmail.com'
+const VALID_PASSWORD = '123456'
 const USER_ID = '01'
 const ERR_MSG = 'Invalid email or password'
 const ERR_MSG_EMAIL  = 'Enter Your Email'

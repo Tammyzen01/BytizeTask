@@ -1,171 +1,70 @@
-import React, {createRef} from 'react';
+import React from 'react';
 import {
   StatusBar,
   Text,
-  TouchableOpacity,
-  Animated,
   Image,
-  Dimensions,
+  TouchableOpacity,
   TextInput,
-  ToastAndroid,
 } from 'react-native';
-import {Container, Content, View} from 'native-base';
-import {styles} from './styles';
+import {Container, Content, Icon, View} from 'native-base';
+import styles from './styles';
+import TopRated from './List';
 import theme from '@theme/styles';
-import {openDrawer} from '@utility/navigation';
-import List from './List';
-import {getList} from '@api';
-import LottieView from 'lottie-react-native';
-import {
-  MENU_ICON,
-  ADD_ICON,
-  HOME_HEADING,
-  BACK,
-  NAME,
-  NO_DATA_FOUND,
-  LOADING,
-  ADD,
-  UPDATE,
-  ERR_MSG_NAME
-} from '@constant';
-
-const {width} = Dimensions.get('window');
+import {back, openDrawer} from '@utility/navigation';
+import request from '@utility/request';
+import topRatedList from './data/topRated';
+import {MENU_ICON} from '@constant';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
+    let route = props.route ? props.route : {};
+    let params = route.params ? route.params : {};
+    this.title = params.title ? params.title : 'Doctors';
     this.state = {
-      isLoading: true,
-      isShow: false,
-      name: '',
-      expertId: '',
-      listData: [],
-      isUpdate: false,
-      id: '',
+      selected: '',
+      visibleDailyReminder: false,
+      isDisabled: false,
+      isOpen: false,
+      TopRatedList: [],
+      fetchingTopRatedList: true,
     };
   }
 
-  async componentDidMount() {
-    this.getList();
+  showDailyReminder() {
+    this.setState({
+      visibleDailyReminder: true,
+    });
   }
 
-  getList = () => {
-    this.setState({isLoading: true});
-    getList()
-      .then(res => {
-        const {result} = res;
-        this.setState({listData: result});
-        this.setState({isLoading: false});
-      })
-      .catch(err => {
-        this.setState({isLoading: false});
-      });
-  };
+  onChangeDailyReminder() {
+    this.setState({
+      visibleDailyReminder: false,
+    });
+  }
 
-  addName = async () => {
-    const {name, listData} = this.state;
-    let id = Math.round(Math.random() * 108);
-    if (name) {
-      let arr = listData;
-      let data = {
-        show: {id, name},
-      };
-      arr.push(data);
-      this.setState({listData: arr});
-      this.setState({isShow: false, name: ''});
-    } else {
-      ToastAndroid.show(ERR_MSG_NAME, ToastAndroid.SHORT);
-      return false;
-    }
-  };
+  onValueChange() {
+    this.setState({
+      selected: '',
+    });
+  }
 
- updateName  = () => {
-    const {name, id, listData} = this.state;
-    if (name) {
-      for (let index = 0; index < listData.length; index++) {
-        if (id == listData[index].show.id) {
-          listData[index].show.name = name;
-        }
-      }
-      this.setState({isShow: false, name: ''});
-    } else {
-      ToastAndroid.show(ERR_MSG_NAME, ToastAndroid.SHORT);
-      return false;
-    }
-  };
+  async componentDidMount() {
+    await this.fetchTopRatedList();
+  }
 
-  remove = async id => {
-    this.setState({isLoading: true});
-    const {listData} = this.state;
-    let arr = listData.filter(data => id != data.show.id);
-    this.setState({listData: arr});
-    setTimeout(() => {
-      this.setState({isLoading: false});
-    }, 100);
-  };
-
-  openEdit = data => {
-    const {name, id} = data;
-    this.setState({name, id, isUpdate: true, isShow: true});
-  };
-
-  renderPreference = () => {
-    const {isShow, name, listData, isUpdate} = this.state;
-    return (
-      <>
-        {!isShow ? (
-          listData.length > 0 ? (
-            <List
-              data={listData}
-              remove={data => this.remove(data)}
-              edit={data => this.openEdit(data)}
-            />
-          ) : (
-            <View style={styles.lottieView}>
-              <Text style={styles.noText}>{NO_DATA_FOUND}</Text>
-            </View>
-          )
-        ) : (
-          <View style={styles.specificView}>
-            <View style={styles.fieldView}>
-              <View style={styles.formContent}>
-                <View style={styles.sideTextView}>
-                  <View>
-                    <Text style={styles.fieldHeading}>{NAME}</Text>
-                    <View style={styles.formInputGroup}>
-                      <TextInput
-                        placeholder={'name'}
-                        style={styles.formInputText}
-                        placeholderTextColor="#a9a9a9"
-                        value={name}
-                        onChangeText={name => this.setState({name})}
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View style={styles.createbtnView}>
-              <TouchableOpacity
-                style={styles.createBtnActive}
-                activeOpacity={0.8}
-                onPress={() =>
-                  isUpdate ? this.updateName() : this.addName()
-                }>
-                <Text style={styles.createBtnText}>
-                  {isUpdate ? UPDATE : ADD}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      </>
-    );
-  };
+  async fetchTopRatedList() {
+    await this.setState({
+      fetchingTopRatedList: true,
+    });
+    const list = await request(topRatedList);
+    await this.setState({
+      TopRatedList: list,
+      fetchingTopRatedList: false,
+    });
+  }
 
   render() {
-    const {isLoading, isShow} = this.state;
-    let renderItem = this.renderPreference();
     return (
       <Container>
         <StatusBar
@@ -173,43 +72,29 @@ export default class extends React.Component {
           animated
           barStyle="light-content"
         />
-        <Content
-          contentContainerStyle={[theme.layout, {backgroundColor: '#fff'}]}>
-          <View style={styles.headerView}>
-            {isShow ? (
-              <TouchableOpacity
-                onPress={() => this.setState({isShow: false})}
-                style={styles.backView}>
-                <Text style={styles.backText}>{BACK}</Text>
-              </TouchableOpacity>
-            ) : (
+
+        <Content contentContainerStyle={theme.layout}>
+          <View style={styles.homeFirstView}>
+            <View style={styles.locView}>
               <TouchableOpacity onPress={openDrawer} style={styles.iconView}>
                 <Image source={MENU_ICON} style={styles.notyIcon} />
               </TouchableOpacity>
-            )}
-
-            <TouchableOpacity
-              onPress={() => this.setState({isShow: true, isUpdate: false})}
-              style={styles.proIconView}>
-              <Image source={ADD_ICON} style={styles.proIcon} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.headerVieww}>
-            <Text style={styles.backText}>{HOME_HEADING}</Text>
-          </View>
-          {isLoading ? (
-            <View style={styles.lottieView}>
-              <LottieView
-                style={{height: 120, width: width}}
-                source={LOADING}
-                autoPlay
-                loop
-              />
             </View>
-          ) : (
-            renderItem
-          )}
-          <View style={{margin: 10}} />
+          </View>
+
+          <View style={{margin: 20}} />
+          <View style={styles.homeSecondView}>
+            <Text style={styles.browserText}>Products</Text>
+          </View>
+
+          <TopRated
+            list={this.state.TopRatedList}
+            fetching={this.state.fetchingTopRatedList}
+            category={this.title}
+            call={() => this.refs.modal.open()}
+          />
+
+          <View style={{margin: 15}} />
         </Content>
       </Container>
     );

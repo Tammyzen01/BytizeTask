@@ -14,8 +14,8 @@ export default {
         backgroundColor: '#fff'
     },
     formHeader: {
-        width: 180,
-        height: 90,
+        width: 160,
+        height: 100,
     },
     formHeaderTitle: {
         fontFamily: FAMILY.bold,
@@ -42,7 +42,7 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
-        borderRadius: 8,
+        borderRadius: 25,
         marginBottom: 10,
         height: 50,
         paddingHorizontal: 10,
@@ -82,7 +82,7 @@ export default {
         paddingVertical: 15,
         paddingHorizontal: 20,
         marginVertical: 5,
-        borderRadius: 8,
+        borderRadius: 25,
         elevation: 12
     },
     forgot: {
@@ -90,11 +90,11 @@ export default {
         justifyContent: 'flex-end'
     },
     btnForgot: {
-        fontFamily: 'Montserrat-Regular',
-        color: '#fff',
-        paddingVertical: 15,
+        fontFamily: FAMILY.bold,
+        color: COLOR.default,
+        paddingVertical: 18,
         textAlign: 'right',
-        fontSize: 13,
+        fontSize: 15,
     },
     formBtnIcon: {
         fontSize: SIZE.huge,
@@ -250,7 +250,7 @@ export default {
     formFooterBtnText: {
         fontFamily: FAMILY.bold,
         fontSize: 13,
-        color: '#fff',
+        color: COLOR.default,
         letterSpacing: .5
     },
     callBtn: {
@@ -289,7 +289,7 @@ export default {
     formFooterText2: {
         fontFamily: FAMILY.bold,
         fontSize: 13,
-        color: '#fff',
+        color: COLOR.default,
         letterSpacing: .5
     },
     subscriptionModal: {
@@ -345,6 +345,9 @@ export default {
         alignItems: 'center',
         marginRight: 8,
         backgroundColor: '#fff',
+        elevation:8,
+        borderColor: '#a4cc30',
+        borderWidth:1,
     },
     tickImage: {
         width: 18,

@@ -13,7 +13,7 @@ import styles from './styles';
 import {navigate} from '@utility/navigation';
 import theme from '@theme/styles';
 import AsyncStorage from '@react-native-community/async-storage';
-import { LOGO, SIGN_IN, LOGIN_TO, VALID_EMAIL, VALID_PASSWORD, USER_ID, ERR_MSG, ERR_MSG_EMAIL, ERR_MSG_PASSWORD } from '@constant'
+import { LOGO, SIGN_IN, LOGIN_TO, VALID_EMAIL, VALID_PASSWORD, USER_ID, ERR_MSG, ERR_MSG_EMAIL, ERR_MSG_PASSWORD, TICK_ICON  } from '@constant'
 
 export default class extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ export default class extends React.Component {
     this.state = {
       email: '',
       password: '',
+      check:''
     };
   }
 
@@ -61,16 +62,19 @@ export default class extends React.Component {
 
   async onSignIn() {
     const {email, password} = this.state;
-    if (email == VALID_EMAIL && password == VALID_PASSWORD) {
-      await AsyncStorage.setItem('userId', USER_ID);
-      navigate('Home');
-    } else {
-      ToastAndroid.show(ERR_MSG, ToastAndroid.SHORT);
-    }
+    console.log(email , VALID_EMAIL , password , VALID_PASSWORD,email == VALID_EMAIL && password == VALID_PASSWORD)
+ 
+      if (email == VALID_EMAIL && password == VALID_PASSWORD) {
+        await AsyncStorage.setItem('userId', USER_ID);
+        navigate('Home');
+      } else {
+        ToastAndroid.show(ERR_MSG, ToastAndroid.SHORT);
+      }
+ 
   }
 
   render() {
-    const {isLoading} = this.state;
+    const { isLoading, check } = this.state;
     return (
       <Container style={theme.layoutFx}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
@@ -108,7 +112,9 @@ export default class extends React.Component {
                   onChangeText={password => this.setState({password})}
                 />
               </View>
-              <View style={{margin: 30}} />
+              <TouchableOpacity style={styles.forgot} onPress={() => { navigate('ForgotPassword') }}>
+                <Text style={styles.btnForgot}>Forgot Password ?</Text>
+              </TouchableOpacity>
               <TouchableOpacity
                 style={styles.formBtn}
                 onPress={() => this.validation()}>
@@ -119,6 +125,21 @@ export default class extends React.Component {
                 )}
               </TouchableOpacity>
             </View>
+
+            <View style={styles.FooterView}>
+
+<View style={styles.termView}>
+  <TouchableOpacity style={styles.squareMainView} onPress={() => this.setState({ check: !check })}>
+    {this.state.check ? <Image source={TICK_ICON } style={styles.tickImage} /> : null}
+  </TouchableOpacity>
+  <Text style={styles.smnText1}> I agree to the</Text>
+  <TouchableOpacity onPress={() => {}}>
+    <Text style={styles.formFooterText2}>Terms & condition</Text>
+  </TouchableOpacity>
+</View>
+
+</View>
+
           </View>
         </Content>
       </Container>
